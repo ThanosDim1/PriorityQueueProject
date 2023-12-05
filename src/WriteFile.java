@@ -9,6 +9,7 @@ public class WriteFile {
     static int population;
     static int area;
     static double density;
+
     public void LineProcessor(String[] tokens){
         id = Integer.parseInt(tokens[0]);
         city = tokens[1];
