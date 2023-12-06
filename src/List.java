@@ -110,6 +110,7 @@ public class List<T> implements ListInterface<T> {
 
         return ret.toString();
     }
+
     public City compare(City city1,City city2) {
         int nameComparison = city1.getName().compareTo(city2.getName());
 
