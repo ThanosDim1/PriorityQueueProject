@@ -15,16 +15,21 @@ public class WriteFile {
         city = tokens[1];
         population = Integer.parseInt(tokens[2]);
         area = Integer.parseInt(tokens[3]);
-        density = Double.parseDouble(tokens[6]);
+        density = Double.parseDouble(tokens[5]);
     }
 
     public WriteFile() {
         Scanner input=new Scanner(System.in);
         System.out.println("Enter the name of the txt file:");
         String txtfile =input.nextLine();
+        txtfile= txtfile+ ".txt";
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(txtfile))){
+            System.out.println("Enter the data");
             while (input.hasNextLine()){
                 String line=input.nextLine();
+                if (line.isEmpty()){
+                    break;
+                }
                 String[] tokens = line.split("\\s+");
                 LineProcessor(tokens);
                 writer.write("ID: " + id + ", City: " + city + ", Population: " + population
@@ -33,7 +38,7 @@ public class WriteFile {
         }catch (IOException e) {
             System.err.println("An error occurred: " + e.getMessage());
         } finally {
-            input.close(); // Close the scanner to prevent resource leaks
+            input.close();
         }
     }
 }
