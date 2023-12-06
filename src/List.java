@@ -1,5 +1,8 @@
 import java.util.Comparator;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
+
 public class List<T> implements ListInterface<T> {
     private Node<T> head = null;
     private Node<T> tail = null;
@@ -10,6 +13,11 @@ public class List<T> implements ListInterface<T> {
     @Override
     public boolean isEmpty() {
         return head == null;
+    }
+
+    @Override
+    public void sort(Comparator<T> comparator) {
+
     }
 
     @Override
@@ -25,11 +33,6 @@ public class List<T> implements ListInterface<T> {
         }
     }
 
-    /**
-     * Inserts the data at the end of the list
-     *
-     * @param data the inserted item
-     */
     @Override
     public void insertAtBack(T data) {
         Node<T> n = new Node<>(data);
@@ -107,53 +110,17 @@ public class List<T> implements ListInterface<T> {
 
         return ret.toString();
     }
+    public City compare(City city1,City city2) {
+        int nameComparison = city1.getName().compareTo(city2.getName());
 
-    @Override
-    public void sort(Comparator<T> comparator) {
-        // No need to sort if list is empty or has a single element
-        if (head == null || head == tail)
-            return;
-
-        Node<T> newHead = null;
-        Node<T> newTail = null;
-
-        while (head != null) {
-            // get next item
-            Node<T> tmp = head;
-
-            // move head
-            head = head.getNext();
-
-            // move swap to new-sorted list
-            if (newHead == null) {
-                newHead = newTail = tmp;
-                tmp.setNext(null);
+        if (city1.getDensity() == city2.getDensity()) {
+            if (Objects.equals(city1.getName(), city2.getName())) {
+                return (city1.getID() > city2.getID()) ? city2 : city1;
             } else {
-                Node<T> prev = null;
-                Node<T> iterator = newHead;
-
-                // iterate newList until we get to a point where our data is smaller or reach the end
-                while (iterator != null && comparator.compare(iterator.getData(), tmp.getData()) >= 0) {
-                    prev = iterator;
-                    iterator = iterator.getNext();
-                }
-
-                // reached the point where we should place the node
-
-                // if prev == null then its the head of the list
-                if (prev == null)
-                    newHead = tmp;
-                else
-                    prev.setNext(tmp);
-
-                // if iterator == null then its the tail of the list
-                tmp.setNext(iterator);
-                if(iterator == null)
-                    newTail = tmp;
+                return (nameComparison < 0) ? city1 : city2;
             }
+        } else {
+            return (city1.getDensity() > city2.getDensity()) ? city2 : city1;
         }
-
-        head = newHead;
-        tail = newTail;
     }
 }
