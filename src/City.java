@@ -1,4 +1,6 @@
-public class City implements CityInterface{
+import java.util.Objects;
+
+public class City implements CityInterface,Comparable<City>{
     int ID;
     String Name;
     int Population;
@@ -9,6 +11,7 @@ public class City implements CityInterface{
         this.Name=Name;
         this.Population=Population;
         this.InfluenzaCases=InfCases;
+        this.density=density;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class City implements CityInterface{
     public float getDensity(){
         return this.density;
     }
+
     @Override
     public void setID(int ID) {
         this.ID=ID;
@@ -42,7 +46,7 @@ public class City implements CityInterface{
 
     @Override
     public void setName(String name) {
-        this.Name=Name;
+        this.Name=name;
     }
 
     @Override
@@ -54,8 +58,24 @@ public class City implements CityInterface{
     public void setInfluenzaCases(int InfluenzaCases) {
         this.InfluenzaCases=InfluenzaCases;
     }
+
     @Override
     public void setDensity(float density){
         this.density=density;
+    }
+
+    @Override
+    public int compareTo(City city2) {
+        int nameComparison = this.getName().compareTo(city2.getName());
+
+        if (this.getDensity() == city2.getDensity()) {
+            if (Objects.equals(this.getName(), city2.getName())) {
+                return (this.getID() > city2.getID()) ? 0 : 1;
+            } else {
+                return (nameComparison < 0) ? 1 : 0;
+            }
+        } else {
+            return (this.getDensity() > city2.getDensity()) ? 0 : 1;
+        }
     }
 }
