@@ -110,18 +110,4 @@ public class List<T> implements ListInterface<T> {
 
         return ret.toString();
     }
-
-    public City compare(City city1,City city2) {
-        int nameComparison = city1.getName().compareTo(city2.getName());
-
-        if (city1.getDensity() == city2.getDensity()) {
-            if (Objects.equals(city1.getName(), city2.getName())) {
-                return (city1.getID() > city2.getID()) ? city2 : city1;
-            } else {
-                return (nameComparison < 0) ? city1 : city2;
-            }
-        } else {
-            return (city1.getDensity() > city2.getDensity()) ? city2 : city1;
-        }
-    }
 }
