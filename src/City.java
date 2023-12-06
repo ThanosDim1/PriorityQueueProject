@@ -2,12 +2,13 @@ public class City implements CityInterface{
     int ID;
     String Name;
     int Population;
-    int InfCases;
-    public City(int ID,String Name,int Population,int InfCases){
+    int InfluenzaCases;
+    float density;
+    public City(int ID,String Name,int Population,int InfCases,float density){
         this.ID=ID;
         this.Name=Name;
         this.Population=Population;
-        this.InfCases=InfCases;
+        this.InfluenzaCases=InfCases;
     }
 
     @Override
@@ -27,9 +28,13 @@ public class City implements CityInterface{
 
     @Override
     public int getInfluenzaCases() {
-        return this.InfCases;
+        return this.InfluenzaCases;
     }
 
+    @Override
+    public float getDensity(){
+        return this.density;
+    }
     @Override
     public void setID(int ID) {
         this.ID=ID;
@@ -47,6 +52,10 @@ public class City implements CityInterface{
 
     @Override
     public void setInfluenzaCases(int InfluenzaCases) {
-        this.InfCases=InfluenzaCases;
+        this.InfluenzaCases=InfluenzaCases;
+    }
+    @Override
+    public void setDensity(float density){
+        this.density=density;
     }
 }
