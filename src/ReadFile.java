@@ -33,7 +33,7 @@ public class ReadFile {
                 String[] elements = line.split("\\s+");
 
                 LineProcessor(elements);
-                Cities.insertAtFront(new City(id,city,population,area,density));
+                Cities.insertAtBack(new City(id,city,population,area,density));
             }
         }catch (IOException e) {
             System.err.println("An error occurred: " + e.getMessage());

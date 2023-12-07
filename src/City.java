@@ -67,7 +67,6 @@ public class City implements CityInterface,Comparable<City>{
     @Override
     public int compareTo(City city2) {
         int nameComparison = this.getName().compareTo(city2.getName());
-
         if (this.getDensity() == city2.getDensity()) {
             if (Objects.equals(this.getName(), city2.getName())) {
                 return (this.getID() > city2.getID()) ? 0 : 1;
@@ -77,5 +76,10 @@ public class City implements CityInterface,Comparable<City>{
         } else {
             return (this.getDensity() > city2.getDensity()) ? 0 : 1;
         }
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }

@@ -5,7 +5,6 @@ public interface ListInterface<T> {
 
     void insertAtFront(T data);
 
-
     void insertAtBack(T data);
 
     T removeFromFront() throws NoSuchElementException;
@@ -14,5 +13,9 @@ public interface ListInterface<T> {
 
     boolean isEmpty();
 
-    void sort(Comparator<T> comparator);
+    T getFirst() throws NoSuchElementException;
+    T getLast() throws NoSuchElementException;
+    T get(int index) throws IndexOutOfBoundsException;
+    T remove(int index) throws IndexOutOfBoundsException;
+    void insert(int index, T data) throws IndexOutOfBoundsException;
 }
