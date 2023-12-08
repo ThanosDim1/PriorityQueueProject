@@ -1,11 +1,11 @@
 public interface CityInterface {
-    public int getID();
-    public String getName();
-    public int getPopulation();
-    public int getInfluenzaCases();
-    public void setID(int ID);
-    public void setName(String name);
-    public void setPopulation(int population);
-    public void setInfluenzaCases(int InfluenzaCases);
-    public double CalculateDensity();
+    int getID();
+    String getName();
+    int getPopulation();
+    int getInfluenzaCases();
+    void setID(int ID);
+    void setName(String name);
+    void setPopulation(int population);
+    void setInfluenzaCases(int InfluenzaCases);
+    double CalculateDensity();
 }
