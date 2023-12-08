@@ -11,7 +11,10 @@ public class Influenza_k {
 
         System.out.println("Enter the number of cities to compare:");
         int k = scanner.nextInt();
-
+        if (k > readFile.getCityCount()){
+            System.out.println("The number you entered exceeds the number of cities");
+            return;
+        }
         HeapSortArray heapSort = new HeapSortArray();
         cities = heapSort.heapSort(cities);
 
