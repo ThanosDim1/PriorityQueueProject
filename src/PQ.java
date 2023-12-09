@@ -14,6 +14,7 @@ public class PQ implements PQInterface,Comparator<City>{
     public int size(){
         return this.size;
     }
+
     @Override
     public boolean isEmpty(){
         return this.size==0;
@@ -82,13 +83,17 @@ public class PQ implements PQInterface,Comparator<City>{
         // Keep a reference to the removed item
         City removedCity = heap[index];
 
-        // Swap the item with the last element
-        heap[index] = heap[size];
+        // If the removed item is not the last element, swap it with the last element
+        if (index < size) {
+            heap[index] = heap[size];
+        }
+
+        // Decrement the size
         size--;
 
         // Check if the removal affected the heap's order
-        // Sink or swim the element based on its new position
-        if (index > 1 && comparator.compare(heap[index], heap[index / 2]) > 0) {
+        // Swim or sink the element based on its new position
+        if (index > 1 && comparator.compare(heap[index], heap[index / 2]) < 0) {
             swim(index);
         } else {
             sink(index);
@@ -97,6 +102,7 @@ public class PQ implements PQInterface,Comparator<City>{
         // Return the removed item
         return removedCity;
     }
+
     @Override
     public void swim(int i) {
         // if i is root (i==1) return
@@ -107,7 +113,7 @@ public class PQ implements PQInterface,Comparator<City>{
         int parent = i / 2;
 
         // compare parent with child i
-        while (i != 1 && comparator.compare(heap[i], heap[parent]) > 0) {
+        while (i != 1 && comparator.compare(heap[i], heap[parent]) < 0) {
             City parentCity = heap[i];
             heap[i]=heap[parent];
             heap[parent] = parentCity;
@@ -115,6 +121,7 @@ public class PQ implements PQInterface,Comparator<City>{
             parent = i / 2;
         }
     }
+
     @Override
     public void sink(int i) {
         // determine left, right child
