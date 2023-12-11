@@ -20,6 +20,9 @@ public class Influenza_k {
         }
         HeapSortArray heapSort = new HeapSortArray();
         cities = heapSort.heapSort(cities);
+        for (int i = 0; i < cities.length; i++) {
+            System.out.println(cities[i].CalculateDensity());
+        }
 
         PQ pq = new PQ(new Comparator<City>() {
             @Override
