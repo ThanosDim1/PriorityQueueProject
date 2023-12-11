@@ -54,9 +54,11 @@ public class City implements CityInterface,Comparable<City>{
     }
 
     @Override
-    public double CalculateDensity(){
-        return (double)((this.InfluenzaCases*50.000))/((double)this.Population);
+    public double CalculateDensity() {
+        double density = ((double) (this.InfluenzaCases * 50000)) / ((double) this.Population);
+        return Math.round(density * 100.0) / 100.0;
     }
+    
 
     public int compareTo(City city2) {
         int densityComparison = Double.compare(this.CalculateDensity(), city2.CalculateDensity());
