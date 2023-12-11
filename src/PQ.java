@@ -3,13 +3,13 @@ import java.util.Comparator;
 public class PQ implements PQInterface,Comparator<City>{
     private City[] heap;
     private int size;
-    private final Comparator<City> comparator;
+    private int DEFAULT_CAPACITY = 4;
 
-    public PQ(Comparator<City> comparator) {
+    public PQ() {
         this.heap = new City[DEFAULT_CAPACITY + 1];
         this.size = 0;
-        this.comparator = comparator;
     }
+
     @Override
     public int size(){
         return this.size;
@@ -23,8 +23,10 @@ public class PQ implements PQInterface,Comparator<City>{
     @Override
     public void insert(City item) {
         // Check available space
-        if (size == heap.length - 1)
+        if (size >= 0.75 * DEFAULT_CAPACITY) {
             resize();
+            DEFAULT_CAPACITY = DEFAULT_CAPACITY * 2;
+        }
 
         // Place item at the next available position
         heap[++size] = item;
@@ -93,7 +95,7 @@ public class PQ implements PQInterface,Comparator<City>{
 
         // Check if the removal affected the heap's order
         // Swim or sink the element based on its new position
-        if (index > 1 && comparator.compare(heap[index], heap[index / 2]) < 0) {
+        if (index > 1 && compare(heap[index], heap[index / 2]) < 0) {
             swim(index);
         } else {
             sink(index);
@@ -113,7 +115,7 @@ public class PQ implements PQInterface,Comparator<City>{
         int parent = i / 2;
 
         // compare parent with child i
-        while (i != 1 && comparator.compare(heap[i], heap[parent]) < 0) {
+        while (i != 1 && compare(heap[i], heap[parent]) < 0) {
             City parentCity = heap[i];
             heap[i]=heap[parent];
             heap[parent] = parentCity;
@@ -137,13 +139,13 @@ public class PQ implements PQInterface,Comparator<City>{
             // Determine the largest child of node i
             int min = left;
             if (right <= size) {
-                if (comparator.compare(heap[left], heap[right]) > 0)
+                if (compare(heap[left], heap[right]) > 0)
                     min = right;
             }
 
             // If the heap condition holds, stop. Else swap and go on.
             // child smaller than parent
-            if (comparator.compare(heap[i], heap[min]) < 0)
+            if (compare(heap[i], heap[min]) < 0)
                 return;
             else {
                 City minCity = heap [i];
@@ -158,7 +160,7 @@ public class PQ implements PQInterface,Comparator<City>{
 
     @Override
     public void resize() {
-        City[] newHeap = new City[heap.length + AUTOGROW_SIZE];
+        City[] newHeap = new City[DEFAULT_CAPACITY * 2];
 
         // copy array
         //(notice: in the priority queue, elements are located in the array slots with positions in [1, size])
@@ -169,18 +171,25 @@ public class PQ implements PQInterface,Comparator<City>{
     }
 
     @Override
-    public int compare(City city1,City city2) {
+    public int compare(City city1, City city2) {
+        // Compare cities based on population density
         int densityComparison = Double.compare(city1.CalculateDensity(), city2.CalculateDensity());
 
+        // If population densities are equal, compare cities based on name
         if (densityComparison == 0) {
+            // Compare city names lexicographically
             int nameComparison = city1.getName().compareTo(city2.getName());
 
+            // If names are also equal, compare cities based on ID
             if (nameComparison == 0) {
+                // Compare city IDs
                 return Integer.compare(city1.getID(), city2.getID());
             } else {
+                // Return result of name comparison
                 return nameComparison;
             }
         } else {
+            // Return result of density comparison
             return densityComparison;
         }
     }

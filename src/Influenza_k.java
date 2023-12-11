@@ -1,15 +1,13 @@
-import java.util.Comparator;
 import java.util.Scanner;
 
 
 public class Influenza_k {
-    private Scanner scanner;
-
-
     public Influenza_k(Scanner scanner) {
-        this.scanner = scanner;
 
-        ReadFile readFile = new ReadFile(scanner);
+        // Ask the user for the file name
+        System.out.println("Enter the name of the text file:");
+        String fileName = scanner.nextLine() + ".txt";
+        ReadFile readFile = new ReadFile(fileName);
         City[] cities = readFile.getCities();
 
         System.out.println("Enter the number of cities to compare:");
@@ -18,18 +16,10 @@ public class Influenza_k {
             System.out.println("The number you entered exceeds the number of cities");
             return;
         }
-        HeapSortArray heapSort = new HeapSortArray();
-        cities = heapSort.heapSort(cities);
 
-        PQ pq = new PQ(new Comparator<City>() {
-            @Override
-            public int compare(City o1, City o2) {
-                return o1.compareTo(o2);
-            }
-        });
-
-        for (int i = 0; i < cities.length; i++) {
-            pq.insert(cities[i]);
+        PQ pq = new PQ();
+        for (City city : cities) {
+            pq.insert(city);
         }
 
         // Display the top k cities with the least amount of cases
@@ -38,7 +28,8 @@ public class Influenza_k {
             System.out.println(pq.getmin().getName());
         }
 
-        
+        HeapSortArray heapSort = new HeapSortArray();
+        cities = heapSort.heapSort(cities);
 
         // Display the top k cities with the least amount of cases
         System.out.println("Top " + k + " cities with the least amount of cases:");
