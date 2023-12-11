@@ -8,7 +8,7 @@ public class ReadFile {
     public int id;
     public String city;
     public int population;
-    public int area;
+    public int cases;
     public int cityCount;
     public City[] cities;
 
@@ -16,7 +16,28 @@ public class ReadFile {
         id = Integer.parseInt(tokens[0]);
         city = tokens[1];
         population = Integer.parseInt(tokens[2]);
-        area = Integer.parseInt(tokens[3]);
+        cases = Integer.parseInt(tokens[3]);
+        try {
+            id = Integer.parseInt(tokens[0]);
+            if (id < 1 || id > 999) {
+                throw new IllegalArgumentException("ID must be between 1 and 999");
+            }
+
+            city = tokens[1];
+
+            population = Integer.parseInt(tokens[2]);
+            if (population <= 0 || population >= 10_000_000) {
+                throw new IllegalArgumentException("Population must be positive and less than 10,000,000");
+            }
+
+            cases = Integer.parseInt(tokens[3]);
+            if (cases >= population) {
+                throw new IllegalArgumentException("Cases must be less than the population");
+            }
+        } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
+        }
     }
 
     public ReadFile(String fileName) {
@@ -40,7 +61,7 @@ public class ReadFile {
             while ((line = br.readLine()) != null) {
                 String[] elements = line.split("\\s+");
                 LineProcessor(elements);
-                cities[index] = new City(id, city, population, area);
+                cities[index] = new City(id, city, population, cases);
                 index++;
             }
         } catch (IOException e) {

@@ -5,8 +5,8 @@ public class Influenza_k {
     public Influenza_k(Scanner scanner) {
 
         // Ask the user for the file name
-        System.out.println("Enter the name of the text file:");
-        String fileName = scanner.nextLine() + ".txt";
+        System.out.println("Enter the whole path of the text file:");
+        String fileName = scanner.nextLine();
         ReadFile readFile = new ReadFile(fileName);
         City[] cities = readFile.getCities();
 
