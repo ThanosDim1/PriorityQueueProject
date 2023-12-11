@@ -1,7 +1,10 @@
+import java.util.Comparator;
 import java.util.Scanner;
+
 
 public class Influenza_k {
     private Scanner scanner;
+
 
     public Influenza_k(Scanner scanner) {
         this.scanner = scanner;
@@ -17,6 +20,25 @@ public class Influenza_k {
         }
         HeapSortArray heapSort = new HeapSortArray();
         cities = heapSort.heapSort(cities);
+
+        PQ pq = new PQ(new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                return o1.compareTo(o2);
+            }
+        });
+
+        for (int i = 0; i < cities.length; i++) {
+            pq.insert(cities[i]);
+        }
+
+        // Display the top k cities with the least amount of cases
+        System.out.println("Top " + k + " cities with the least amount of cases:");
+        for (int i = 0; i < k; i++) {
+            System.out.println(pq.getmin().getName());
+        }
+
+        
 
         // Display the top k cities with the least amount of cases
         System.out.println("Top " + k + " cities with the least amount of cases:");
