@@ -193,4 +193,13 @@ public class PQ implements PQInterface,Comparator<City>{
             return densityComparison;
         }
     }
+
+    public City getLast() {
+        // Ensure not empty
+        if (size == 0)
+            return null;
+
+        // return root without removing
+        return heap[size];
+    }
 }

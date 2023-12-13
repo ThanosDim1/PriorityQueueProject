@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.Scanner;
 
 public class ReadFile {
 
@@ -14,6 +14,9 @@ public class ReadFile {
     public int cases;
     public int cityCount;
     public City[] cities;
+    public PQ pq = new PQ();
+    public int k;
+    public int cnt=1;
 
     public void LineProcessor(String[] tokens){
         id = Integer.parseInt(tokens[0]);
@@ -41,15 +44,16 @@ public class ReadFile {
             System.err.println(e.getMessage());
             System.exit(1);
         }
-
     }
     
     public ReadFile(String fileName) {
+        Scanner scanner = new Scanner(System.in);
         // Check if the file exists
         Path filePath = Paths.get(fileName);
         if (!Files.exists(filePath)) {
             System.err.println("Path not found: " + fileName);
-            System.exit(1);}
+            System.exit(1);
+        }
 
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -66,12 +70,30 @@ public class ReadFile {
         // Initialize the array with the determined size
         cities = new City[cityCount];
 
+        System.out.println("Enter the number of cities to compare:");
+        k = scanner.nextInt();
+
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             int index = 0;
             while ((line = br.readLine()) != null) {
                 String[] elements = line.split("\\s+");
                 LineProcessor(elements);
+
+                if (k>=cnt){
+
+                    pq.insert(new City(id, city, population, cases));
+                    cnt++;
+                }else{
+
+                    City temp = pq.getLast();
+                    if (pq.compare(temp,new City(id, city, population, cases))>0){
+                        pq.insert(new City(id, city, population, cases));
+                    }else {
+                        pq.insert(temp);
+                    }
+                }
+
                 cities[index] = new City(id, city, population, cases);
                 index++;
             }
@@ -84,7 +106,12 @@ public class ReadFile {
         return this.cities;
     }
 
+
     public int getCityCount(){
         return this.cityCount;
+    }
+
+    public int getK(){
+        return k;
     }
 }
