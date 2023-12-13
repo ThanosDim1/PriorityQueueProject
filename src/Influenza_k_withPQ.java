@@ -38,7 +38,7 @@ public class Influenza_k_withPQ {
     }
     public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
-            Influenza_k mainObj = new Influenza_k(scanner);
+            Influenza_k_withPQ mainObj = new Influenza_k_withPQ(scanner);
     }
 }
 
