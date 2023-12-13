@@ -10,8 +10,8 @@ public class Influenza_k {
         ReadFile readFile = new ReadFile(fileName);
         City[] cities = readFile.getCities();
 
-        System.out.println("Enter the number of cities to compare:");
-        int k = scanner.nextInt();
+        int k = readFile.getK();
+
         if (k > readFile.getCityCount()){
             System.out.println("The number you entered exceeds the number of cities");
             return;

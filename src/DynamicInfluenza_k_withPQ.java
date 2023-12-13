@@ -10,8 +10,7 @@ public class DynamicInfluenza_k_withPQ {
         // Create an instance of ReadFile to read cities from the file
         ReadFile readFile = new ReadFile(fileName);
 
-        // Create an instance of PQ
-        PQ priorityQueue = new PQ();
+        PQ priorityQueue = readFile.getPQ();
 
         int k = readFile.getK();
 

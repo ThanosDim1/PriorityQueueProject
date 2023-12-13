@@ -81,7 +81,6 @@ public class ReadFile {
                 LineProcessor(elements);
 
                 if (k>=cnt){
-
                     pq.insert(new City(id, city, population, cases));
                     cnt++;
                 }else{
@@ -106,6 +105,9 @@ public class ReadFile {
         return this.cities;
     }
 
+    public PQ getPQ() {
+        return this.pq;
+    }
 
     public int getCityCount(){
         return this.cityCount;
