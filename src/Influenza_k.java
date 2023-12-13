@@ -15,18 +15,7 @@ public class Influenza_k {
         if (k > readFile.getCityCount()){
             System.out.println("The number you entered exceeds the number of cities");
             return;
-        }
-
-        PQ pq = new PQ();
-        for (City city : cities) {
-            pq.insert(city);
-        }
-
-        // Display the top k cities with the least amount of cases
-        System.out.println("Top " + k + " cities with the least amount of cases:");
-        for (int i = 0; i < k; i++) {
-            System.out.println(pq.getmin().getName());
-        }
+        } 
 
         HeapSortArray heapSort = new HeapSortArray();
         cities = heapSort.heapSort(cities);

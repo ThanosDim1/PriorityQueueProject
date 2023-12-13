@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class ReadFile {
@@ -38,9 +41,17 @@ public class ReadFile {
             System.err.println(e.getMessage());
             System.exit(1);
         }
-    }
 
+    }
+    
     public ReadFile(String fileName) {
+        // Check if the file exists
+        Path filePath = Paths.get(fileName);
+        if (!Files.exists(filePath)) {
+            System.err.println("Path not found: " + fileName);
+            System.exit(1);}
+
+
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
 
