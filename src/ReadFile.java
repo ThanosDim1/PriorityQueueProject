@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
+
 
 public class ReadFile {
 
@@ -112,7 +112,4 @@ public class ReadFile {
         return this.cityCount;
     }
 
-    public int getK() {
-        return k;
-    }
 }

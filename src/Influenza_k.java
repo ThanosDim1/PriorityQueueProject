@@ -24,7 +24,7 @@ public class Influenza_k {
 
         // Check if the correct number of command-line arguments is provided
         if (args.length != 2) {
-            System.out.println("Usage: java Influenza_k <filepath> <k>");
+            System.out.println("Usage: java Influenza_k <k> <filepath>");
             System.exit(1); // Exit the program with an error code
         }
         int k = Integer.parseInt(args[0]);
