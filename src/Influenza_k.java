@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Influenza_k {
     public Influenza_k(int k,String filePath) {
         ReadFile readFile = new ReadFile(filePath, k);

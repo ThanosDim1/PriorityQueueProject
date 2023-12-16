@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class City implements CityInterface,Comparable<City>{
     int ID;
     String Name;
