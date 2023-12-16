@@ -16,9 +16,9 @@ public class ReadFile {
     public City[] cities;
     public PQ pq = new PQ();
     public int k;
-    public int cnt=1;
+    public int cnt = 1;
 
-    public void LineProcessor(String[] tokens){
+    public void LineProcessor(String[] tokens) {
         id = Integer.parseInt(tokens[0]);
         city = tokens[1];
         population = Integer.parseInt(tokens[2]);
@@ -45,16 +45,18 @@ public class ReadFile {
             System.exit(1);
         }
     }
-    
-    public ReadFile(String fileName) {
-        Scanner scanner = new Scanner(System.in);
+
+    public ReadFile(String fileName, int kFromCommandLine) {
+        // Use the provided kFromCommandLine value if it's greater than zero
+        
+        this.k = kFromCommandLine;
+        
         // Check if the file exists
         Path filePath = Paths.get(fileName);
         if (!Files.exists(filePath)) {
             System.err.println("Path not found: " + fileName);
             System.exit(1);
         }
-
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -70,9 +72,6 @@ public class ReadFile {
         // Initialize the array with the determined size
         cities = new City[cityCount];
 
-        System.out.println("Enter the number of cities to compare:");
-        k = scanner.nextInt();
-
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             int index = 0;
@@ -80,15 +79,15 @@ public class ReadFile {
                 String[] elements = line.split("\\s+");
                 LineProcessor(elements);
 
-                if (k>=cnt){
+                if (k >= cnt) {
                     pq.insert(new City(id, city, population, cases));
                     cnt++;
-                }else{
+                } else {
 
                     City temp = pq.getLast();
-                    if (pq.compare(temp,new City(id, city, population, cases))>0){
+                    if (pq.compare(temp, new City(id, city, population, cases)) > 0) {
                         pq.insert(new City(id, city, population, cases));
-                    }else {
+                    } else {
                         pq.insert(temp);
                     }
                 }
@@ -109,11 +108,11 @@ public class ReadFile {
         return this.pq;
     }
 
-    public int getCityCount(){
+    public int getCityCount() {
         return this.cityCount;
     }
 
-    public int getK(){
+    public int getK() {
         return k;
     }
 }

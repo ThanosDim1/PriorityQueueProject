@@ -2,19 +2,13 @@ import java.util.Scanner;
 
 public class DynamicInfluenza_k_withPQ {
 
-    public DynamicInfluenza_k_withPQ(Scanner scanner) {
-        // Ask the user for the file name
-        System.out.println("Enter the whole path of the text file:");
-        String fileName = scanner.nextLine();
-
+    public DynamicInfluenza_k_withPQ(int k, String filePath) {
         // Create an instance of ReadFile to read cities from the file
-        ReadFile readFile = new ReadFile(fileName);
+        ReadFile readFile = new ReadFile(filePath,k);
 
         PQ priorityQueue = readFile.getPQ();
 
-        int k = readFile.getK();
-
-        if (k > readFile.getCityCount()){
+        if (k > readFile.getCityCount()) {
             System.out.println("The number you entered exceeds the number of cities");
             return;
         }
@@ -27,7 +21,16 @@ public class DynamicInfluenza_k_withPQ {
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        DynamicInfluenza_k_withPQ mainObj = new DynamicInfluenza_k_withPQ (scanner);
+        // Check if the correct number of command-line arguments is provided
+        if (args.length != 2) {
+            System.out.println("Usage: java DynamicInfluenza_k_withPQ <filepath> <k>");
+            System.exit(1); // Exit the program with an error code
+        }
+        int k = Integer.parseInt(args[0]);
+        String filePath = args[1];
+        
+
+        // Create an instance of DynamicInfluenza_k_withPQ with the provided arguments
+        DynamicInfluenza_k_withPQ mainObj = new DynamicInfluenza_k_withPQ(k, filePath);
     }
 }
