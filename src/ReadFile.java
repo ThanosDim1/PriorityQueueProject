@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class ReadFile {
 
@@ -15,7 +16,6 @@ public class ReadFile {
     public City[] cities;
     public PQ pq = new PQ();
     public int k;
-    public int cnt = 1;
 
     public void LineProcessor(String[] tokens) {
         id = Integer.parseInt(tokens[0]);
@@ -49,7 +49,7 @@ public class ReadFile {
         // Use the provided kFromCommandLine value if it's greater than zero
         
         this.k = kFromCommandLine;
-        
+
         // Check if the file exists
         Path filePath = Paths.get(fileName);
         if (!Files.exists(filePath)) {
@@ -57,6 +57,7 @@ public class ReadFile {
             System.exit(1);
         }
 
+        //This part of the code is only necessary for the cities array(Influenza_k)
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
 
@@ -74,25 +75,34 @@ public class ReadFile {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             int index = 0;
+            int cnt = 1;
+            line = br.readLine();
+            String[] elements = line.split("\\s+");
+            LineProcessor(elements);
+            City max = new City(id, city, population, cases);
+
             while ((line = br.readLine()) != null) {
-                String[] elements = line.split("\\s+");
+                elements = line.split("\\s+");
                 LineProcessor(elements);
+
+                if (pq.compare(max , new City(id, city, population, cases)) < 0){
+                    max = new City(id, city, population, cases);
+                }
 
                 if (k >= cnt) {
                     pq.insert(new City(id, city, population, cases));
                     cnt++;
+
                 } else {
 
-                    City temp = pq.getLast();
-                    if (pq.compare(temp, new City(id, city, population, cases)) > 0) {
+                    if (pq.compare(max, new City(id, city, population, cases)) > 0) {
+                        pq.remove(max.getID());
                         pq.insert(new City(id, city, population, cases));
-                    } else {
-                        pq.insert(temp);
+
                     }
                 }
 
-                cities[index] = new City(id, city, population, cases);
-                index++;
+                cities[index++] = new City(id, city, population, cases);
             }
         } catch (IOException e) {
             System.err.println("An error occurred: " + e.getMessage());
@@ -111,4 +121,7 @@ public class ReadFile {
         return this.cityCount;
     }
 
+    public int getK() {
+        return k;
+    }
 }

@@ -33,6 +33,7 @@ public class PQ implements PQInterface,Comparator<City>{
 
         // Let the newly added item swim
         swim(size);
+
     }
 
     @Override

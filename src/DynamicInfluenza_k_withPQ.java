@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class DynamicInfluenza_k_withPQ {
 
     public DynamicInfluenza_k_withPQ(int k, String filePath) {
