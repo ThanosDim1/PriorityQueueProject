@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 public class ReadFile {
 
@@ -76,34 +75,35 @@ public class ReadFile {
             String line;
             int index = 0;
             int cnt = 1;
-            line = br.readLine();
-            String[] elements = line.split("\\s+");
-            LineProcessor(elements);
-            City max = new City(id, city, population, cases);
 
             while ((line = br.readLine()) != null) {
-                elements = line.split("\\s+");
+                // Split the line into elements
+                String[] elements = line.split("\\s+");
+
+                // Process the elements (assuming LineProcessor method does some processing)
                 LineProcessor(elements);
 
-                if (pq.compare(max , new City(id, city, population, cases)) < 0){
-                    max = new City(id, city, population, cases);
-                }
+                // Create a new City object based on the current line
+                City currentCity = new City(id, city, population, cases);
 
+
+                // Insert the current city into the priority queue if the limit (k) is not reached
                 if (k >= cnt) {
-                    pq.insert(new City(id, city, population, cases));
+                    pq.insert(currentCity);
                     cnt++;
-
                 } else {
-
-                    if (pq.compare(max, new City(id, city, population, cases)) > 0) {
+                    City max = pq.getLast();
+                    // Replace the city with max cases if the current city has less cases
+                    if (pq.compare(max, currentCity) > 0) {
                         pq.remove(max.getID());
-                        pq.insert(new City(id, city, population, cases));
-
+                        pq.insert(currentCity);
                     }
                 }
 
-                cities[index++] = new City(id, city, population, cases);
+                // Add the current city to the array of cities
+                cities[index++] = currentCity;
             }
+
         } catch (IOException e) {
             System.err.println("An error occurred: " + e.getMessage());
         }

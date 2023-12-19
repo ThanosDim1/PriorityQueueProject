@@ -49,8 +49,10 @@ public class PQ implements PQInterface,Comparator<City>{
     @Override
     public City getmin() {
         // Ensure not empty
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
+
 
         // Keep a reference to the root item
         City root = heap[1];
